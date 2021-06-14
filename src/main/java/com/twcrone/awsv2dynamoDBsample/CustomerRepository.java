@@ -16,8 +16,9 @@ import java.util.concurrent.ExecutionException;
 @Repository
 public class CustomerRepository {
 
-    private DynamoDbAsyncClient client;
-    private String customerTable;
+    public static final String ID_COLUMN = "customerId";
+    private final DynamoDbAsyncClient client;
+    private final String customerTable;
 
     public CustomerRepository(DynamoDbAsyncClient client,
                               @Value("${application.dynamodb.customer_table}") String customerTable) {
@@ -84,8 +85,6 @@ public class CustomerRepository {
         return Mono.fromCompletionStage(client.putItem(putItemRequest))
                 .map(updateItemResponse -> customerId);
     }
-
-    public static final String ID_COLUMN = "customerId";
 
     //Creating table on startup if not exists
     @PostConstruct

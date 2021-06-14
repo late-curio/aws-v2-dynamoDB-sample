@@ -11,7 +11,7 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Configuration
 public class Routes {
 
-    private CustomerService customerService;
+    private final CustomerService customerService;
 
     public Routes(CustomerService customerService) {
         this.customerService = customerService;
