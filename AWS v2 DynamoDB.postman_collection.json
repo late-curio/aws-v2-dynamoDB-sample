@@ -1,0 +1,158 @@
+{
+	"info": {
+		"_postman_id": "2739fb2c-2868-4a89-9fec-75e5c311c109",
+		"name": "AWS v2 DynamoDB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Customers",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"msrp\": \"$12.00\",\n    \"cost\": \"$4.00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Customer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Todd\",\n    \"email\": \"tcrone@newrelic.com\",\n    \"city\": \"Fuquay-Varina\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Customer by ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"msrp\": \"$12.00\",\n    \"cost\": \"$4.00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/customers/dd3357ea-f6a3-4499-b781-0a335c5ca55e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customers",
+						"dd3357ea-f6a3-4499-b781-0a335c5ca55e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Customer by ID",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Todd\",\n    \"email\": \"tcrone@newrelic.com\",\n    \"city\": \"Portland\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/customers/dd3357ea-f6a3-4499-b781-0a335c5ca55e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customers",
+						"dd3357ea-f6a3-4499-b781-0a335c5ca55e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE Customer by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"msrp\": \"$12.00\",\n    \"cost\": \"$4.00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/customers/dd3357ea-f6a3-4499-b781-0a335c5ca55e",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customers",
+						"dd3357ea-f6a3-4499-b781-0a335c5ca55e"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
