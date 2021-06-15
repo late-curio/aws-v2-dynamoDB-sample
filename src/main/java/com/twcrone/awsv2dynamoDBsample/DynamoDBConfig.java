@@ -15,10 +15,15 @@ public class DynamoDBConfig {
     @Bean
     public DynamoDbAsyncClient dynamoDbAsyncClient(
             @Value("${application.dynamodb.endpoint}") String dynamoDBEndpoint) {
-        return DynamoDbAsyncClient.builder()
-                .region(Region.US_ISO_EAST_1)
-                .endpointOverride(URI.create(dynamoDBEndpoint))
-                .credentialsProvider(DefaultCredentialsProvider.builder().build())
+        Region region = Region.US_EAST_1;
+        DynamoDbAsyncClient client = DynamoDbAsyncClient.builder()
+                .region(region)
                 .build();
+        return client;
+//        return DynamoDbAsyncClient.builder()
+//                .region(Region.US_EAST_1)
+//                //.endpointOverride(URI.create(dynamoDBEndpoint))
+//                .credentialsProvider(DefaultCredentialsProvider.builder().build())
+//                .build();
     }
 }
