@@ -45,6 +45,10 @@ public class CustomerService {
                 .flatMap(customer -> ServerResponse.ok().body(BodyInserters.fromValue(customer)));
     }
 
+    public Customer getCustomerSync(String customerId) {
+        return  customerRepository.getCustomerSync(customerId);
+    }
+
     public Mono<ServerResponse> updateCustomer(ServerRequest serverRequest) {
         String customerId = serverRequest.pathVariable("customerId");
 

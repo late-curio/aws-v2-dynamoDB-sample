@@ -5,10 +5,12 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import software.amazon.awssdk.services.dynamodb.DynamoDbAsyncClient;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.*;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -18,12 +20,15 @@ public class CustomerRepository {
 
     public static final String ID_COLUMN = "customerId";
     private final DynamoDbAsyncClient client;
+    private final DynamoDbClient syncClient;
     private final String customerTable;
 
     public CustomerRepository(DynamoDbAsyncClient client,
+                              DynamoDbClient syncClient,
                               @Value("${application.dynamodb.customer_table}") String customerTable) {
         this.client = client;
         this.customerTable = customerTable;
+        this.syncClient = syncClient;
     }
 
     public Flux<Customer> listCustomers() {
@@ -72,6 +77,15 @@ public class CustomerRepository {
         return Mono.fromCompletionStage(client.getItem(getItemRequest))
                 .map(getItemResponse -> getItemResponse.item())
                 .map(CustomerMapper::fromMap);
+    }
+
+    public Customer getCustomerSync(String customerId) {
+        GetItemRequest getItemRequest = GetItemRequest.builder()
+                .tableName(customerTable)
+                .key(Map.of("customerId", AttributeValue.builder().s(customerId).build()))
+                .build();
+
+        return CustomerMapper.fromMap(syncClient.getItem(getItemRequest).item());
     }
 
     public Mono<String> updateCustomer(String customerId, Customer customer) {
