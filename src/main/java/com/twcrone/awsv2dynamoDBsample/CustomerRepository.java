@@ -10,7 +10,6 @@ import software.amazon.awssdk.services.dynamodb.model.*;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;

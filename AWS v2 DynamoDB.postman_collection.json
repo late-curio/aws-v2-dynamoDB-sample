@@ -153,6 +153,39 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "GET Customer by ID (sync)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"msrp\": \"$12.00\",\n    \"cost\": \"$4.00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/customers/8b89a401-9b38-4878-8c67-d8efbe6c3482/sync",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customers",
+						"8b89a401-9b38-4878-8c67-d8efbe6c3482",
+						"sync"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

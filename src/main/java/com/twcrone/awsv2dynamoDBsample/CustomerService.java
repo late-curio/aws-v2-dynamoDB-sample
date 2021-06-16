@@ -46,7 +46,7 @@ public class CustomerService {
     }
 
     public Customer getCustomerSync(String customerId) {
-        return  customerRepository.getCustomerSync(customerId);
+        return customerRepository.getCustomerSync(customerId);
     }
 
     public Mono<ServerResponse> updateCustomer(ServerRequest serverRequest) {
