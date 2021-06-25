@@ -27,7 +27,7 @@ public class CustomerService {
     public Mono<ServerResponse> createCustomer(ServerRequest serverRequest) {
 
         return serverRequest.bodyToMono(Customer.class)
-                .flatMap(customer -> customerRepository.createCustomer(customer))
+                .flatMap(customerRepository::createCustomer)
                 .flatMap(customer -> ServerResponse.created(URI.create("/customers/" + customer.getId())).build());
     }
 
