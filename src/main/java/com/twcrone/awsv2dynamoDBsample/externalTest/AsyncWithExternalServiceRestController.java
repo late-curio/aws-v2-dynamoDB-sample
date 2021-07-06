@@ -1,5 +1,8 @@
 package com.twcrone.awsv2dynamoDBsample.externalTest;
 
+import com.twcrone.awsv2dynamoDBsample.Customer;
+import com.twcrone.awsv2dynamoDBsample.CustomerMapper;
+import com.twcrone.awsv2dynamoDBsample.CustomerRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,20 +35,35 @@ public class AsyncWithExternalServiceRestController {
 
     @GetMapping("/dynamodb")
     public Mono<String> callWithDynamoDbCall() {
-        final Map<String, AttributeValue> attributeValueMap = Map.of(
-                "SubscriberId", AttributeValue.builder().s("value").build(),
-                "NamespacePublisherId", AttributeValue.builder().s("value2").build());
 
+        /*
+        customer.setId(UUID.randomUUID().toString());
+
+        PutItemRequest putItemRequest = PutItemRequest.builder()
+                .tableName(customerTable)
+                .item(CustomerMapper.toMap(customer))
+                .build();
+
+        return Mono.fromCompletionStage(client.putItem(putItemRequest))
+                .map(putItemResponse -> putItemResponse.attributes())
+                .map(attributeValueMap -> customer);
+
+ */
         return Mono.just(Long.toString(System.currentTimeMillis()))
                 .flatMap(externalClientService::postPublicTests) // --------------------(1) first external call
                 .flatMap(t -> {
+                    Customer customer = new Customer();
+                    customer.setId(t);
+                    customer.setName("Guff");
+                    customer.setCity("Fortnite");
+                    customer.setEmail("guff@fortnite.com");
                     final PutItemRequest request = PutItemRequest.builder()
-                            .tableName("presence-nudged-subscription-isolated")
-                            .item(attributeValueMap)
+                            .tableName("customers")
+                            .item(CustomerMapper.toMap(customer))
                             .build();
 
                     return Mono.fromCompletionStage(() -> dynamoDbAsyncClient.putItem(request)) // -----------------(2) call to DynamoDb
-                            .doOnError(e -> System.out.println("Failed to saveOrUpdate nudged subscription"))
+                            .doOnError(e -> System.out.println("Failed to customer subscription"))
                             .thenReturn("saved");
                 })
                 .flatMap(externalClientService::postAnotherPublicTests); // ------------------------ (3) second external call
@@ -53,6 +71,6 @@ public class AsyncWithExternalServiceRestController {
 
     @GetMapping("/random")
     public String getRandom(@RequestParam(name = "seed") Long seed) {
-        return new Random(seed).toString();
+        return Long.toString(new Random(seed).nextLong());
     }
 }
